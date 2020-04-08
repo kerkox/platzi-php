@@ -17,14 +17,15 @@ use Aura\Router\RouterContainer;
 $capsule = new Capsule;
 
 $capsule->addConnection([
-    'driver'    => 'mysql',
+    'driver'    => getenv('DB_DRIVER','mysql'),
     'host'      => getenv('DB_HOST','localhost'),
     'database'  => getenv('DB_NAME'),
     'username'  => getenv('DB_USER'),
-    'password'  => getenv('DB_PASSWORD'),
+    'password'  => getenv('DB_PASS'),
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix'    => '',
+    'port'      => getenv('DB_PORT')
 ]);
 
 // Make this Capsule instance available globally via static methods... (optional)
