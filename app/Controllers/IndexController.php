@@ -11,6 +11,11 @@ class IndexController extends BaseController {
         $projects = [
             $project1
         ];
+        $limitMonths = 0;
+        $filterFunction = function(array $job) use ($limitMonths){
+            return $job['months'] >= $limitMonths;
+        };
+        $jobs = array_filter($jobs->toArray(), $filterFunction);
 
         $name = 'Hector Benitez';
         $limitMonths = 2000;

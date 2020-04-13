@@ -6,6 +6,15 @@
       {{ responseMessage }}
     </div>
 
+
+    <div class="row">
+        <div class="col">
+            {% if user != null %}
+                <img src="/uploads/{{ user.logo }}" width="150" height="auto">
+            {% endif %}
+        </div>
+    </div>
+
     <form action="/jobs/add" method="post" enctype="multipart/form-data" >
         <label for="">Title:</label>
         <input type="text" name="title" ><br>

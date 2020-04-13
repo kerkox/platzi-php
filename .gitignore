@@ -2,3 +2,8 @@
 vendor/
 ._composer.phar
 composer.phar
+.idea
+/.DS_Store
+/.env
+/._.DS_Store
+uploads

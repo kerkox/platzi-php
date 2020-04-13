@@ -32,8 +32,15 @@
           <ul>
             {% for job in jobs %}
               <li class="work-position">
-                <h5>{{ job.title }}</h5>
-                <p>{{ job.description }}</p>
+                <div class="col-3">
+                {% if job.logo != '' %}
+                    <img src="/{{ job.logo }}" width="150" height="auto">
+                {% endif %}
+                </div>
+                <div class="col">
+                    <h5>{{ job.title }}</h5>
+                    <p>{{ job.description }}</p>
+                </div>
               </li>
             {% endfor %}
           </ul>
@@ -52,7 +59,7 @@
                 <h5>Project X</h5>
                 <div class="row">
                     <div class="col-3">
-                        <img id="profile-picture" src="https://ui-avatars.com/api/?name=John+Doe&size=255" alt="">
+                        <img id="profile-picture" src="https://ui-avatars.com/api/?name=Paul+Cortes&size=255" alt="">
                       </div>
                       <div class="col">
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius earum corporis at accusamus quisquam hic quos vel? Tenetur, ullam veniam consequatur esse quod cum, quam cupiditate assumenda natus maiores aperiam.</p>

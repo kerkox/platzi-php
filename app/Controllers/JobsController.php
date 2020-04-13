@@ -2,12 +2,16 @@
 namespace App\Controllers;
 
 use App\Models\Job;
+use App\Models\User;
 use Respect\Validation\Validator as v;
 
 class JobsController extends BaseController {
     public function getAddJobAction($request) {
         $responseMessage = null;
-
+        $user = null;
+        if(isset($_SESSION['userId'])){
+            $user = User::where('id_user',$_SESSION['userId'])->first();
+        }
         if ($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
             $jobValidator = v::key('title', v::stringType()->notEmpty())
@@ -22,12 +26,13 @@ class JobsController extends BaseController {
                 $fileName = "";
                 if($logo->getError() == UPLOAD_ERR_OK){
                     $fileName = $logo->getClientFileName();
-                    $logo->moveTo("uploads/$fileName");
+                    $filePath = "uploads/$fileName";
+                    $logo->moveTo($filePath);
                 }
                 $job = new Job();
                 $job->title = $postData['title'];
                 $job->description = $postData['description'];
-                $job->logo = $fileName;
+                $job->logo = $filePath;
                 $job->save();
 
                 $responseMessage = 'Saved';
@@ -37,7 +42,8 @@ class JobsController extends BaseController {
         }
 
         return $this->renderHTML('addJob.twig', [
-            'responseMessage' =>$responseMessage
+            'responseMessage' =>$responseMessage,
+            'user' => $user
         ]);
     }
 }
