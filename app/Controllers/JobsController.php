@@ -26,7 +26,7 @@ class JobsController extends BaseController {
                 $fileName = "";
                 if($logo->getError() == UPLOAD_ERR_OK){
                     $fileName = $logo->getClientFileName();
-                    $filePath = "uploads/$fileName";
+                    $filePath = "/uploads/$fileName";
                     $logo->moveTo($filePath);
                 }
                 $job = new Job();
