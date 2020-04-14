@@ -11,6 +11,7 @@ session_start();
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');
 $dotenv->load();
 
+use App\Middlewares\AuthenticationMiddleware;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Aura\Router\RouterContainer;
 use Laminas\Diactoros\Response;
@@ -124,6 +125,7 @@ if (!$route) {
     $harmony = new Harmony($request, new Response());
     $harmony
         ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()))
+        ->addMiddleware(new AuthenticationMiddleware())
         ->addMiddleware(new Middlewares\AuraRouter($routerContainer))
         ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'))
         ->run();
