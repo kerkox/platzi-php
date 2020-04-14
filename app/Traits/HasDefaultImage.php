@@ -8,6 +8,6 @@ trait HasDefaultImage
         if(!$this->logo){
             return "https://ui-avatars.com/api/?name=$altText&size=255";
         }
-        return $this->logo;
+        return "/".$this->logo;
     }
 }
