@@ -18,7 +18,8 @@
         "woohoolabs/harmony": "^7.1",
         "middlewares/whoops": "^2.0",
         "filp/whoops": "^2.7",
-        "monolog/monolog": "^2.0"
+        "monolog/monolog": "^2.0",
+        "robmorgan/phinx": "^0.12.1"
 
     }
 }
