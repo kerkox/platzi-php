@@ -16,8 +16,7 @@ class HelloWorldCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        echo 'Hello World';
-
+        $output->writeln('Hello World');
         return 0;
     }
 }
