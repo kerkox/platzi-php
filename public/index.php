@@ -1,8 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 require_once '../vendor/autoload.php';
 
@@ -10,6 +7,11 @@ session_start();
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');
 $dotenv->load();
+if(getenv('DEBUG') === 'true'){
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
 
 use App\Middlewares\AuthenticationMiddleware;
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -17,9 +19,14 @@ use Aura\Router\RouterContainer;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use WoohooLabs\Harmony\Harmony;
 use WoohooLabs\Harmony\Middleware\DispatcherMiddleware;
 use WoohooLabs\Harmony\Middleware\LaminasEmitterMiddleware;
+
+$log = new Logger('app');
+$log->pushHandler(new StreamHandler(__DIR__.'/../logs/app.log', Logger::WARNING));
 
 $container = new DI\Container();
 $capsule = new Capsule;
@@ -124,8 +131,11 @@ if (!$route) {
     }
     $harmony = new Harmony($request, new Response());
     $harmony
-        ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()))
-        ->addMiddleware(new \Middlewares\Whoops())
+        ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()));
+        if(getenv('DEBUG') === 'true'){
+            $harmony->addMiddleware(new \Middlewares\Whoops());
+        }
+    $harmony
         ->addMiddleware(new AuthenticationMiddleware())
         ->addMiddleware(new Middlewares\AuraRouter($routerContainer))
         ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'))

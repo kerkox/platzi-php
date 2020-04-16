@@ -17,7 +17,8 @@
         "opis/closure": "^3.5",
         "woohoolabs/harmony": "^7.1",
         "middlewares/whoops": "^2.0",
-        "filp/whoops": "^2.7"
+        "filp/whoops": "^2.7",
+        "monolog/monolog": "^2.0"
 
     }
 }
