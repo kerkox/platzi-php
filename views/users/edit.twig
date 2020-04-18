@@ -1,0 +1,27 @@
+{% extends 'layout.twig' %}
+
+{% block content %}
+    <h1>Edit User: {{ user.email }}</h1>
+    {% if responseMessage %}
+    <div class="alert alert-primary" role="alert">
+        {{ responseMessage }}
+    </div>
+    {% endif %}
+    <div class="col-6">
+
+            <form action="/users/edit" method="POST">
+                <div class="form-group">
+                    <label for="password">Password: </label>
+                    <input id="password" type="password" name="password" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password_confirm">password_confirm: </label>
+                    <input id="password_confirm" type="password" name="password_confirm" class="form-control">
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+
+    </div>
+
+{% endblock %}

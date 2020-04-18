@@ -15,7 +15,7 @@ class UserController extends BaseController
     {
         $responseMessage = null;
         $postData = $request->getParsedBody();
-        $userValidator = v::key('username', v::stringType()->notEmpty())
+        $userValidator = v::key('email', v::stringType()->notEmpty())
                 ->key('password', v::stringType()->notEmpty());
 
         try {
@@ -23,7 +23,7 @@ class UserController extends BaseController
             $postData = $request->getParsedBody();
 
             $user = new User();
-            $user->username = $postData['username'];
+            $user->email = $postData['email'];
             $user->password = password_hash($postData['password'], PASSWORD_DEFAULT);
             $user->save();
 
@@ -34,6 +34,37 @@ class UserController extends BaseController
 
         return $this->renderHTML('addUser.twig', [
             'responseMessage' =>$responseMessage
+        ]);
+    }
+
+    public function getEditUserAction(){
+        $user = User::findOrFail($_SESSION['userId']);
+        return $this->renderHTML('users/edit.twig', [
+            'user' => $user
+        ]);
+    }
+
+    public function postUpdateUserAction($request){
+        $responseMessage = null;
+        $postData = $request->getParsedBody();
+        $user = null;
+        $userValidator = v::key('password', v::stringType()->notEmpty());
+        try {
+            $userValidator->assert($postData);
+            $postData = $request->getParsedBody();
+
+            $user = User::findOrFail($_SESSION['userId']);
+            $user->password = password_hash($postData['password'], PASSWORD_DEFAULT);
+            $user->save();
+
+            $responseMessage = 'Updated';
+        } catch (\Exception $e) {
+            $responseMessage = $e->getMessage();
+        }
+
+        return $this->renderHTML('users/edit.twig', [
+            'responseMessage' =>$responseMessage,
+            'user' => $user
         ]);
     }
 }

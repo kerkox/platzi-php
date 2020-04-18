@@ -86,6 +86,17 @@ $map->get('addUsers', '/users/add', [
     'getAddUserAction',
     'auth' => true
 ]);
+$map->get('editUser', '/users/edit', [
+    'App\Controllers\UserController',
+    'getEditUserAction',
+    'auth' => true
+]);
+$map->post('updateUser', '/users/edit', [
+    'App\Controllers\UserController',
+    'postUpdateUserAction',
+    'auth' => true
+]);
+
 $map->post('saveUsers', '/users/add', [
     'App\Controllers\UserController',
     'postSaveUserAction',
@@ -114,6 +125,8 @@ $map->get('logout', '/logout', [
     'getLogout',
     'auth' => true
 ]);
+
+
 
 $matcher = $routerContainer->getMatcher();
 $route = $matcher->match($request);
