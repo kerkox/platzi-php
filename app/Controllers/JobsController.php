@@ -34,7 +34,7 @@ class JobsController extends BaseController {
         $responseMessage = null;
         $user = null;
         if(isset($_SESSION['userId'])){
-            $user = User::where('id_user',$_SESSION['userId'])->first();
+            $user = User::where('id',$_SESSION['userId'])->first();
         }
         if ($request->getMethod() == 'POST') {
             $postData = $request->getParsedBody();
