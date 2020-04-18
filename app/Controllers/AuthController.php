@@ -25,10 +25,10 @@ class AuthController extends BaseController {
     public function postLogin(ServerRequest $request){
         $responseMessage = null;
         $postData = $request->getParsedBody();
-        $user = User::where('username',$postData['username'])->first();
+        $user = User::where('email',$postData['email'])->first();
         if($user) {
             if(password_verify($postData['password'],$user->password)){
-                $_SESSION['userId'] = $user->id_user;
+                $_SESSION['userId'] = $user->id;
                return new RedirectResponse('/admin');
             } else {
                 $responseMessage = "constraseña o usuario incorrecto";

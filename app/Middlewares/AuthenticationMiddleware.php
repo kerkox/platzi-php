@@ -3,6 +3,7 @@
 namespace App\Middlewares;
 
 use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -19,7 +20,8 @@ class AuthenticationMiddleware implements MiddlewareInterface
         if($request->getUri()->getPath() === '/admin'){
             $sessionUserId = $_SESSION['userId'] ?? null;
             if(!$sessionUserId) {
-                return new EmptyResponse(401);
+                return new RedirectResponse('/login');
+//                return new EmptyResponse(401);
             }
         }
 
